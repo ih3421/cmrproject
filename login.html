@@ -5,13 +5,13 @@
         <title><Smart App | Login PAge></title>
 
     </head>
-    <body>
-        <h1>Smart App</h1>
+    <body style="background-color: #e8ea65;">
+       <div style="text-align: center;"> <h1>Smart App</h1>
 
         <h3>Login Here</h3>
-        {%if message%}
+        <!--{%if message%}
         <p style="color: black;"{{message}}>
-        {% endif %}
+        {% endif %}-->
         <form action="/login_page" method="post">
             <label>Email</label><br>
             <input type="'email" Name="User_email"> <br>
@@ -20,9 +20,10 @@
             <input type="Submit" value="Login">
 
         </form>
-        <p>Not a member?<a href="/register">Register Here</a></p>
-
+        <p>Not a member?<a href="/register"> Register Here</p>
+       </div>
 
     </body>
 </html>
+
 </html>
