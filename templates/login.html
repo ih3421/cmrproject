@@ -9,14 +9,12 @@
        <div style="text-align: center;"> <h1>Smart App</h1>
 
         <h3>Login Here</h3>
-        <!--{%if message%}
-        <p style="color: black;"{{message}}>
-        {% endif %}-->
-        <form action="/login_page" method="post">
+        {% if message %}<p style="color: black;">{{message}}</p>{% endif %}
+        <form action="/perform_login" method="post">
             <label>Email</label><br>
-            <input type="'email" Name="User_email"> <br>
+            <input type="email" Name="User_email"> <br>
             <label>Password</label><br>
-            <input type="password"><br><br>
+            <input type="password" Name="User_password"><br><br>
             <input type="Submit" value="Login">
 
         </form>

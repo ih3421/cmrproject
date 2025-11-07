@@ -25,7 +25,7 @@ class Database:
     def search(self, email, password):
         with open(self.file, 'r') as rf:
             users = json.load(rf)
-
-        if email in users and users[email]["password"] == password:
-            return users[email]["type"]  # return role (pwd/Volunteer/Ngo)
+        if email in users :
+            if users[email]["password"] == password:
+                return users[email]["type"]  # return role (pwd/Volunteer/Ngo)
         return 0

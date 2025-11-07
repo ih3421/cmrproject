@@ -1,38 +1,77 @@
-from flask import Flask,render_template,request,redirect,session
+import urllib.request
+from flask import Flask,render_template,request,redirect,session,url_for
 from db import Database
 app=Flask(__name__)  #Create Flask app instance
 db=Database()  #Create Database instance
+app.secret_key='lokesh i wanna **** ur ***'
 @app.route('/') #when app is initialized, this will be called
-def index():
-    return render_template('pwd1.html')  #in pwd1.html the form has an action /register which causes it to jump to that url
+def index():   
+    return render_template('Home.html')
 
-@app.route('/register',methods=['GET','POST']) #since /register is called from pwd1.html this route will be executed
+@app.route('/register',methods=['GET','POST']) 
 def register_page():
-    return render_template('registerpwd.html') # and here registerpwd.html will be rendered and it has an action in a form which causes it to jump to /perform_registration
-#this continues until the login page is reached
-
+    user_type=request.args.get('user_type')
+    session['user_type']=user_type
+    return render_template('register.html')
+    
 @app.route('/perform_registration',methods=['POST'])
 def perform_registration():
     name=request.form.get('user_name')
     email=request.form.get('user_email')
     password=request.form.get('user_password')
-    response=db.insert(name,email,password)
+    user_type=session.get('user_type')
+    print(name,email,password,user_type)
+    response=db.insert(name,email,password,user_type)
     if response:
-        return render_template('login.html',message="Logged in Successfully")
+        return redirect(url_for('login_page'))
     else:
-        return render_template('registerpwd.html',message="Registration Not Done,Please try again")
+        message="Email already registered, please login"
+        return redirect(url_for('login_page',message=message))
 
-@app.route('/login',methods=['POST'])
+@app.route('/login',methods=['POST','GET'])
 def login_page():
-    email=request.form.get('user_email')
-    password=request.form.get('user_password')
+    message1=request.args.get('message')
+    if message1:
+        print('in if')
+        return render_template('Login.html',message=message1)
+    return render_template('Login.html')
+
+@app.route('/perform_login',methods=['POST','GET'])
+def perform_login():
+    email=request.form.get('User_email')
+    password=request.form.get('User_password')
+    print(email,password)
     response=db.search(email,password)
     print('response',response)
     if response:
-        return render_template('p_Dashboard.html')#in this file no form or actionis present so the execution stops
+        user_type=session.get('user_type')
+        s=(user_type+'_Dashboard')
+        return redirect(url_for(s))
     else:
-        return render_template('login.html',message="Log in not done")
-#we should find a way to jump to /Option_selection if we want to continue the flow
+        message="Email not in database, please register"
+        return redirect(url_for('re_register',message=message))
+
+@app.route('/re_register',methods=['POST','GET'])
+def re_register():
+    message = request.args.get('message')
+    return render_template('re-register.html', message=message)
+
+@app.route('/PwD_Dashboard',methods=['GET'])
+def PwD_Dashboard():
+    return render_template('PwD_Dashboard.html')
+
+@app.route('/Volunteer_Dashboard',methods=['GET'])
+def Volunteer_Dashboard():
+    return render_template('Volunteer_Dashboard.html')
+
+@app.route('/NGO_Dashboard',methods=['GET'])
+def NGO_Dashboard():
+    return render_template('NGO_Dashboard.html')
+
+@app.route('/help_request')
+def help_request_page():
+    return render_template('help_request.html')
+
 @app.route('/Option_selection',methods=['POST'])
 def option_selection():
     option=request.form.get('option')
@@ -44,18 +83,6 @@ def option_selection():
         return render_template('registerpwd.html',user_type=option)
     else:
         return render_template('pwd1.html',message="Select Any Option")
-
-@app.route('/p_Dashboard',methods=['GET'])
-def pwd_dashboard():
-    option=request.form.get('option')
-    if option in ['Pwd','Volunteer','Ngo']:
-        return render_template('registerpwd.html',user_type=option)
-    else:    
-        return "Plzz selct one option"
-
-@app.route('/help_request')
-def help_request_page():
-    return render_template('help_request.html')
 
 if __name__=='__main__':
     app.run(debug=True)
