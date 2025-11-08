@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Verify Volunteer </title>
+</head>
+
+<body>
+    
+    <div id="volunteer details" style="border: solid;">
+        <h2>Volunteer details:</h2>
+        <p>Name: {{name}}</p>
+        <p>Phone No. : {%if ph_no %}{{ph_no}}{%else%} No phone number given{%endif%}
+
+        </p>
+    </div>
+    <div style="padding-top: 10px;padding-bottom: 10px;">
+
+        <div id="documents" style="border:solid;padding-bottom: 10px;">
+            <h2>Documents:</h2>
+            <button>Documents</button>
+        </div>
+    </div>
+    
+</body>
+
+</html>
