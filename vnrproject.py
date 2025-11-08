@@ -72,17 +72,12 @@ def NGO_Dashboard():
 def help_request_page():
     return render_template('help_request.html')
 
-@app.route('/Option_selection',methods=['POST'])
-def option_selection():
-    option=request.form.get('option')
-    if option == 'PwD':
-        return render_template('registerpwd.html')
-    elif option == 'Volunteer':
-        return render_template('registerpwd.html')
-    elif option == 'Ngo':
-        return render_template('registerpwd.html',user_type=option)
-    else:
-        return render_template('pwd1.html',message="Select Any Option")
+@app.route('/profile_page',methods=['POST'])
+def profile_page():
+    name='x'
+    return render_template('profile.html',name=name)
+
 
 if __name__=='__main__':
+
     app.run(debug=True)
