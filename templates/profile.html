@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Profil </title>
+</head>
+
+<body>
+    <h1>User Profile</h1>
+    <br>
+    <div id="personal details" style="border: solid;">
+        <h2>Personal details:</h2>
+        <p>Name: {{}}</p>
+        <p>Phone No. : {%if ph_no %}{{ph_no}}{%else%} No phone number given{%endif%}
+
+        </p>
+
+        <span><img src="email.webp" width="10px" height="10px">
+            <p>Email: {{}}</p>
+        </span>
+    </div>
+    <div style="padding-top: 10px;padding-bottom: 10px;">
+
+        <div id="documents" style="border:solid;padding-bottom: 10px;">
+            <h2>Documents:</h2>
+            <button>Upload your documents</button>
+        </div>
+    </div>
+    <div style="border:solid;padding-bottom: 10px;">
+        <div>
+            <h2>Volunteer list:</h2>
+            <span><button>Add Volunteers</button>
+                <button>List
+                </button>
+            </span>
+        </div>
+    </div>
+</body>
+
+</html>
